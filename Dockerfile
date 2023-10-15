@@ -1,10 +1,21 @@
 # Base image
-FROM nvidia/cuda:11.8.0-cudnn8-runtime-ubuntu20.04
+FROM python:3.10.9-slim as build_final_image
 
-ENV DEBIAN_FRONTEND=noninteractive
+ARG SHA=5ef669de080814067961f28357256e8fe27544f4
+
+ENV DEBIAN_FRONTEND=noninteractive \
+    PIP_PREFER_BINARY=1 \
+    LD_PRELOAD=libtcmalloc.so \
+    ROOT=/stable-diffusion-webui \
+    PYTHONUNBUFFERED=1
 
 # Use bash shell with pipefail option
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+RUN apt-get update && \
+    apt install -y \
+    fonts-dejavu-core rsync git jq moreutils aria2 wget libgoogle-perftools-dev procps libgl1 libglib2.0-0 && \
+    apt-get autoremove -y && rm -rf /var/lib/apt/lists/* && apt-get clean -y
 
 # Set the working directory
 WORKDIR /
