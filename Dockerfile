@@ -20,11 +20,6 @@ RUN apt-get update && \
 # Set the working directory
 WORKDIR /
 
-# Update and upgrade the system packages (Worker Template)
-COPY builder/setup.sh /setup.sh
-RUN /bin/bash /setup.sh && \
-    rm /setup.sh
-
 # Install Python dependencies (Worker Template)
 COPY builder/requirements.txt /requirements.txt
 RUN python3 -m pip install --upgrade pip && \
