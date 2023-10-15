@@ -18,7 +18,7 @@ RUN /bin/bash /setup.sh && \
 COPY builder/requirements.txt /requirements.txt
 RUN python3 -m pip install --upgrade pip && \
     python3 -m pip install --upgrade -r /requirements.txt --no-cache-dir && \
-    pip install "uvicorn[standard]" && \
+    python3 -m pip install "uvicorn[standard]" && \
     rm /requirements.txt
 
 # Add src files (Worker Template)
