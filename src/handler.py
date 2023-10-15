@@ -19,6 +19,7 @@ def wait_for_service(url):
     '''
     while True:
         try:
+            print(url)
             requests.get(url, timeout=120)
             return
         except requests.exceptions.RequestException:
